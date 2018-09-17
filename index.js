@@ -147,7 +147,6 @@ function onDelTpPos(evt) {
  * INIT
  */
 function InfiniteJournalism(_) {
-  console.log(_);
   const ctx = initCtx(_);
   const hook = makeHook(_, ctx);
   webui(_, ctx);
