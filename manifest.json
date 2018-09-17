@@ -1,16 +1,16 @@
 {
   "files": {
     "commands.js": "1500910095adcc0ec41c92d2a7da4cdf3751e4b319b1924b2438e27ff3aeb727",
-    "index.js": "cc00ca38f43ecc2c28b28db524aa971a4070dc4e66c9d56663cc04604e4263f9",
+    "index.js": "364e94317e82821994a629f5e5254af63415d8a03f3bcfe5fe5a3fc8080d2342",
     "LICENSE": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
-    "module.json": "7c708d408ac1e29e2f05d50e43a84ad3fbef3df82d2fadb3bd6d3ecd9a5771c6",
+    "module.json": "fca199dbffd8777cc207c4cfe590bfdd3a2db1ce3b514a30d4286c8c5946a23c",
     "README.md": "156159d0375c1ffcfd603d4af3bd2545b8923f30532e3603c337b44f99f947b9",
     "ui.js": "7604318580b30c5dce899097a92a6d1edde57ca08a17041305c1c422f3764043",
-    "utils.js": "025971ca915f23735f744df7df0449fb0cc14b67208816dc707de192d11c4559",
+    "utils.js": "d66040ece849dcbdc8bb0cf811d98f63b7c6365e0537e652cce7783d37cdc014",
     "ui/index.html": "7527f2c9b5a0c6c58eb99ff361847a159174dd791e4a9e53a6894941ded2975c",
     "ui/list.js": "6e8ee6c8c7aef7ca3916c368f609c48aa9ec1cf431ee842e70c4a85650735fc0",
     "ui/main.css": "5c0b16a47f08d90ee50b5e2730f9f29440d120f23b5536111881bbab45f99dc8",
-    "ui/main.js": "42d03b165c02b54e2653f06644b87e985f4a30c9458e5e3588ff8f152acbe0fc"
+    "ui/main.js": "6f1fb2a85d6fceb88d05ecc60dcf33f3f1a66585ae6f7924c554c5137cfd8db4"
   },
   "defs": {
     "C_ADD_TELEPORT_TO_POS_LIST": 1,
@@ -19,9 +19,9 @@
     "C_PCBANGINVENTORY_USE_SLOT": 1,
     "S_LOAD_TELEPORT_TO_POS_LIST": 1,
     "S_LOGIN": 10,
-    "S_SPAWN_ME": 2,
+    "S_SPAWN_ME": 3,
     "S_LOAD_TOPO": 3,
-    "S_ACTION_END": 1,
+    "S_ACTION_END": 5,
     "C_TELEPORT_TO_POS": 1,
     "C_PLAYER_LOCATION": "raw",
     "S_CANCEL_CONTRACT": "raw",
