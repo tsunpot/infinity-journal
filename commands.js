@@ -11,8 +11,8 @@ const tryRequire = () => {
   catch(_) { return []; }
 };
 
-function journalOptions() {
-  const argLen = arguments.length;
+function journalOptions(...args) {
+  const argLen = args.length;
   let tmp;
   if (!argLen) {
     if (!this.enabled) {
@@ -21,7 +21,7 @@ function journalOptions() {
     }
     return this.cmd.message(`Journal ${(this.enabled = !this.enabled) ? "ena" : "disa"}bled`);
   }
-  else switch((tmp = arguments[0]) && tmp.toLowerCase()) {
+  else switch((tmp = args[0]) && tmp.toLowerCase()) {
    case "ui":
    case "webui":
     if (this.webui) {
@@ -35,14 +35,7 @@ function journalOptions() {
   if (this.currentContract !== 54) {
     return this.cmd.message(`<font color="#ff0000">Travel journal must be open to save custom locations.</font>`);
   }
-  const name = [];
-  {
-    const copy = [];
-    let i = 0;
-    do copy[i] = arguments[i];
-    while(++i < argLen);
-    push.apply(name, copy.join(" ").split(":"));
-  }
+  const name = args.join(" ").split(":");
   const province = name.length > 1 ? name.shift() : "";
   this.newCustom = province ? `${name.join(":")}\t${province}` : name.join(":");
   this.send("C_ADD_TELEPORT_TO_POS_LIST", 1, { name: "*\t*" });

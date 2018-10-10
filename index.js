@@ -4,6 +4,7 @@
  * IMPORTS
  */
 const {
+  getCtx,
   initCtx,
   makeHook,
   atlasIds,
@@ -14,6 +15,7 @@ const {
   getCustomLocations
 } = require("./utils");
 const journalOptions = require("./commands");
+const command = require("command");
 const webui = require("./ui");
 
 /**
@@ -31,27 +33,27 @@ const specialCases = {
  * HELPERS
  */
 function onLogin(evt) {
-  const ctx = this.__self;
+  const ctx = getCtx(this);
   ctx.gameId = evt.gameId;
-  ctx.tpTo = ctx.currentContract = null;
+  ctx.tpTo = ctx.currentContract = undefined;
   ctx.slotAtlas = -1;
 }
-function getContract(evt) { this.__self.currentContract = evt.type; }
-function nullContract() { this.__self.currentContract = null; }
-function nullDestination() { this.__self.tpTo = null; }
+function getContract(evt) { getCtx(this).currentContract = evt.type; }
+function nullContract() { getCtx(this).currentContract = undefined; }
+function nullDestination() { getCtx(this).tpTo = undefined; }
 
 /**
  * TO INFINITY AND BEYOND
  */
 function teleportTo(evt) {
-  const ctx = this.__self;
+  const ctx = getCtx(this);
   return ctx.tpTo ? (
     Object.assign(evt.loc, ctx.tpTo), true
-  ) : null;
+  ) : undefined;
 }
 
 function onVilList(evt) {
-  const ctx = this.__self;
+  const ctx = getCtx(this);
   if (!ctx.enabled || !ctx.tpTo) return;
   const zone = ctx.tpTo.zone;
   const special = specialCases[zone];
@@ -67,12 +69,12 @@ function onVilList(evt) {
     }
   }
   ctx.cmd.message(`<font color="#ff0000">Zone ${zone} cannot be teleported to.</font>`);
-  ctx.tpTo = null;
+  ctx.tpTo = undefined;
 }
 
 function onLoadTpList(evt) {
-  const ctx = this.__self;
-  ctx.tpTo = null;
+  const ctx = getCtx(this);
+  ctx.tpTo = undefined;
   if (!ctx.enabled) return;
   for (let i = 0, arr = evt.locations, len = arr.length; i < len; ++i) {
     const loc = arr[i];
@@ -96,7 +98,7 @@ function onLoadTpList(evt) {
 }
 
 function onPcBangDatalist(evt) {
-  const ctx = this.__self;
+  const ctx = getCtx(this);
   ctx.slotAtlas = -1;
   for (const { item, slot } of evt.inventory) {
     if (atlasIds.has(item)) {
@@ -106,14 +108,14 @@ function onPcBangDatalist(evt) {
 }
 
 function onActionEnd(evt) {
-  const ctx = this.__self;
-  if (evt.gameId.equals(ctx.gameId) && evt.type !== 37) {
-    ctx.tpTo = ctx.currentContract = null;
+  const ctx = getCtx(this);
+  if (evt.source.equals(ctx.gameId) && evt.type !== 37) {
+    ctx.tpTo = ctx.currentContract = undefined;
   }
 }
 
 function onTpToPos(evt) {
-  const ctx = this.__self;
+  const ctx = getCtx(this);
   if (!ctx.enabled) return;
   const idx = evt.index;
   const len = ctx.serverLocations.length;
@@ -130,7 +132,7 @@ function onTpToPos(evt) {
 }
 
 function onDelTpPos(evt) {
-  const ctx = this.__self;
+  const ctx = getCtx(this);
   if (!ctx.enabled) return;
   const idx = evt.index;
   const len = ctx.serverLocations.length;
@@ -147,17 +149,20 @@ function onDelTpPos(evt) {
  * INIT
  */
 function InfiniteJournalism(_) {
-  const ctx = initCtx(_);
+  switch (String(_.region).toLowerCase()) {
+    case "undefined": case "na": return;
+  }
+  const ctx = initCtx({ send: _.send.bind(_), cmd: command(_) });
   const hook = makeHook(_, ctx);
   webui(_, ctx);
 
-  _.command.add("journal", journalOptions, ctx);
+  ctx.cmd.add("journal", journalOptions, ctx);
 
   const r = "raw";
   hook(                      "S_LOGIN", 10,          onLogin);
-  hook(                   "S_SPAWN_ME",  3,       teleportTo);
+  hook(                   "S_SPAWN_ME",  2,       teleportTo);
   hook(                  "S_LOAD_TOPO",  3,       teleportTo);
-  hook(                 "S_ACTION_END",  5,      onActionEnd);
+  hook(                 "S_ACTION_END",  1,      onActionEnd);
   hook(            "C_TELEPORT_TO_POS",  1,        onTpToPos);
   hook(            "C_PLAYER_LOCATION",  r,  nullDestination);
   hook(            "S_CANCEL_CONTRACT",  r,     nullContract);
