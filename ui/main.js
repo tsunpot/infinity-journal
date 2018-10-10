@@ -1,6 +1,6 @@
 /* global _tera_client_proxy_, List */
 /* eslint-disable strict */
-(function(d, undefined) {
+(function(d) {
   "use strict";
   var pending,
       list,
@@ -34,7 +34,7 @@
         length,
         _name,
         _province;
-    current = undefined;
+    current = null;
     name.textContent =
     province.textContent =
     zone.textContent =
