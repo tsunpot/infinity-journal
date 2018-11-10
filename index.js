@@ -147,9 +147,6 @@ function onDelTpPos(evt) {
  * INIT
  */
 function InfiniteJournalism(_) {
-  switch (String(_.region).toLowerCase()) {
-    case "undefined": case "na": return;
-  }
   const ctx = initCtx(_);
   const hook = makeHook(_, ctx);
   webui(_, ctx);
