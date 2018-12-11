@@ -107,7 +107,7 @@ function onPcBangDatalist(evt) {
 
 function onActionEnd(evt) {
   const ctx = this.__self;
-  if (evt.gameId.equals(ctx.gameId) && evt.type !== 37) {
+  if (evt.gameId === ctx.gameId && evt.type !== 37) {
     ctx.tpTo = ctx.currentContract = null;
   }
 }
@@ -159,7 +159,7 @@ function InfiniteJournalism(_) {
   hook(                  "S_LOAD_TOPO",  3,       teleportTo);
   hook(                 "S_ACTION_END",  5,      onActionEnd);
   hook(            "C_TELEPORT_TO_POS",  1,        onTpToPos);
-  hook(            "C_PLAYER_LOCATION",  r,  nullDestination);
+  hook(            "C_TELEPORT_TO_POS",  r,  nullDestination);
   hook(            "S_CANCEL_CONTRACT",  r,     nullContract);
   hook(           "S_REQUEST_CONTRACT",  1,      getContract);
   hook(   "S_VILLAGE_LIST_TO_TELEPORT",  1,        onVilList);
