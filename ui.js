@@ -6,8 +6,6 @@ const {
 const pathname = "/infinityjournal/";
 const getId = (() => { let id = 0; return () => id++; })();
 const paramRegex = /(\d*)(\D*)/;
-const UI = (() => { try { return require("ui"); } catch(_) { /*  */ } })();
-const staticServe = UI && UI.static(require("path").join(__dirname, "ui"));
 
 function getData(param) {
   const data = param.match(paramRegex);
@@ -42,12 +40,13 @@ function open() {
   this.ui.open(`${pathname}${this.id}/`);
 }
 
-function webui(dispatch, ctx) {
+function webui(mod, ctx) {
+  const UI = (() => { try { return mod.require.ui; } catch(_) { /*  */ } })();
   if (!UI) return;
-  const ui = UI(dispatch);
+  const ui = UI(mod);
   const id = getId();
 
-  ui.use(`${pathname}${id}/`, staticServe);
+  ui.use(`${pathname}${id}/`, UI.static(require("path").join(__dirname, "ui")));
   ui.get(`${pathname}${id}/api/*`, api.bind(ctx));
 
   ctx.webui = { ui, id, open };
