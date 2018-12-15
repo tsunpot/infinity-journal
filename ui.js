@@ -41,9 +41,9 @@ function open() {
 }
 
 function webui(mod, ctx) {
-  const UI = (() => { try { return mod.require.ui; } catch(_) { /*  */ } })();
+  const UI = (() => { try { return mod.require.ui.constructor.Router; } catch(_) { /*  */ } })();
   if (!UI) return;
-  const ui = UI.constructor.Router(mod);
+  const ui = UI(mod);
   const id = getId();
 
   ui.use(`${pathname}${id}/`, UI.static(require("path").join(__dirname, "ui")));

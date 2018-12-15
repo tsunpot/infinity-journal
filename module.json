@@ -13,10 +13,7 @@
   ],
   "options": {
     "niceName": "InfinityJournal",
-    "guiName": "InfinityJournal",
-    "settingsVersion": 1,
-    "settingsFile": "config.json",
-    "settingsMigrator": "settings_migrator.js"
+    "guiName": "InfinityJournal"
   },
   "dependencies": {},
   "conflicts": []
