@@ -5,7 +5,7 @@
   "author": "ayylmar",
   "description": "Use the Travel Journal to store potentially infinite locations shared across characters and servers with an optional and easy to use ingame web interface to quickly find that one perfect ERP spot you saved.",
   "version": "v1.0",
-  "donationUrl": "bitcoin:19A72R4axsojj9UJRnpNWPd8bFLTce73v9?label=tera&message=donation",
+  "donationUrl": "https://github.com/ayylmar/donations",
   "supportUrl": "https://github.com/ayylmar/infinity-journal/issues",
   "drmKey": "",
   "servers": [
@@ -13,7 +13,10 @@
   ],
   "options": {
     "niceName": "InfinityJournal",
-    "guiName": "InfinityJournal"
+    "guiName": "InfinityJournal",
+    "settingsVersion": 1,
+    "settingsFile": "config.json",
+    "settingsMigrator": "settings_migrator.js"
   },
   "dependencies": {},
   "conflicts": []
