@@ -1,4 +1,6 @@
 "use strict";
+const { join } = require("path");
+const { existsSync } = require("fs");
 const {
   queueSave,
   customLocations
@@ -41,12 +43,13 @@ function open() {
 }
 
 function webui(mod, ctx) {
-  const UI = (() => { try { return mod.require.ui.constructor.Router; } catch(_) { /*  */ } })();
-  if (!UI) return;
+  const path = join(__dirname, "..", "ui", "index.js");
+  if (!existsSync(path)) return;
+  const UI = require(path);
   const ui = UI(mod);
   const id = getId();
 
-  ui.use(`${pathname}${id}/`, UI.static(require("path").join(__dirname, "ui")));
+  ui.use(`${pathname}${id}/`, UI.static(join(__dirname, "ui")));
   ui.get(`${pathname}${id}/api/*`, api.bind(ctx));
 
   ctx.webui = { ui, id, open };
